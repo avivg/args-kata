@@ -1,3 +1,4 @@
 *.o
 test/build/
+argslib/build/
 .vscode/

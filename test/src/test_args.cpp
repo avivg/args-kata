@@ -1,16 +1,17 @@
 #include <CppUTest/TestHarness.h>
 #include <CppUTest/CommandLineTestRunner.h>
 
-TEST_GROUP(ArgsTestGroup) {
+#include <Args.hpp>
+
+TEST_GROUP(ArgsAcceptanceTestGroup) {
 };
 
-TEST(ArgsTestGroup, ArgsFirstTest) {
-    // FAIL("Failing..");
+TEST(ArgsAcceptanceTestGroup, ArgsShould_parse_boolean_flag) {
+    // Given
+    Args::Schema schema;
+    schema.addFlag("-b");
 }
 
-TEST(ArgsTestGroup, ArgsSecondTest) {
-    CHECK(1 + 1 == 2);
-}
 
 int main(int argc, char **argv) {
     return CommandLineTestRunner::RunAllTests(argc, argv);
