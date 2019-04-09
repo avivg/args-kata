@@ -26,7 +26,7 @@ TEST_LD_LIBS = -lCppUTest -lCppUTestExt
 all: run_tests
 
 run_tests: $(TEST_EXE)
-	$(TEST_EXE)
+	$(TEST_EXE) -v -c
 
 $(TEST_EXE): $(TEST_OBJS) $(ARGS_OBJS) $(ARGS_HDRS)
 	@mkdir -p $(@D)
