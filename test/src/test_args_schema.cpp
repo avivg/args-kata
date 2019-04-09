@@ -14,7 +14,8 @@ TEST(SchemaUnitTestGroup, SchemaShould_save_boolean_flags) {
     // When
     sch.addFlag(flagname);
     // Check
-    CHECK_TRUE(sch.hasFlag(flagname));
+    CHECK_EQUAL(1, sch.flags().size());
+    CHECK(*sch.flags().begin() == flagname);
 }
 
 TEST(SchemaUnitTestGroup, SchemaShould_save_int_args) {
@@ -24,5 +25,6 @@ TEST(SchemaUnitTestGroup, SchemaShould_save_int_args) {
     // When
     sch.addInt(intname);
     // Check
-    CHECK_TRUE(sch.hasInt(intname));
+    CHECK_EQUAL(1, sch.intNames().size());
+    CHECK(intname == *sch.intNames().begin());
 }

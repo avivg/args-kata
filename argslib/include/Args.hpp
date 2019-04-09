@@ -9,11 +9,18 @@ namespace Args
 {
     class Schema {
     public:
+        // Add a boolean flag name to the schema.
         void addFlag(std::string flag);
-        bool hasFlag(std::string flag);
+        
+        // Get all flags in the schema
+        std::set<std::string> flags() { return _flags; }
 
+        
+        // Add an integer name to the schema.
         void addInt(std::string flag);
-        bool hasInt(std::string flag);
+
+        // Get all integer names in the schema.
+        std::set<std::string> intNames() { return _ints; }
 
     private:
         std::set<std::string> _flags;
@@ -37,12 +44,15 @@ namespace Args
         
 
     protected:
-        bool isFlagArgumentMentioned(std::string flag);
-        int intArgValueOrDefault(std::string intname);
-    
+        void initFromSchema(Schema &schema);
+        void initBooleans(std::set<std::string> schemaFlags);
+        void initIntegers(std::set<std::string> schemaIntNames);
+
+        inline bool isFlagValid(std::string flag);
+        inline bool isIntNameValid(std::string intname);
+        
     private:
-        Schema& _schema;
-        std::set<std::string> _flag_args;
+        std::map<std::string, bool> _flag_args;
         std::map<std::string, int> _int_args;
     };
 }
