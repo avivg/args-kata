@@ -12,7 +12,7 @@ namespace Args
         // Add a boolean flag name to the schema.
         void addFlag(std::string flag);
         
-        // Get all flags in the schema
+        // Get all flags in the schema.
         std::set<std::string> flags() { return _flags; }
 
         
@@ -23,7 +23,10 @@ namespace Args
         std::set<std::string> intNames() { return _ints; }
 
 
+        // Add a string argument name to the schema.
         void addStr(std::string strarg);
+
+        // Get all the string argument names in the schema.
         std::set<std::string> strArgs() {return _strs; }
 
     private:
@@ -54,8 +57,11 @@ namespace Args
         int getInt(std::string flag);
         static const int DEFAULT_INT = 0;
         
+        // Return the value given after -<strarg> in argv, or DEFAULT_STR ("") if
+        // -<strarg> was not given.
+        // Throws exception if strarg was no defined by the parser schema
         std::string getStr(std::string strarg);
-        static const std::string DEFAULT_STR;
+        static const std::string DEFAULT_STR; // probably ""
 
     protected:
         void initFromSchema(Schema &schema);
