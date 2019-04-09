@@ -2,14 +2,14 @@
 
 using namespace Args;
 
-void Schema::addFlag(std::string flagname) {
+void Schema::addFlag(ArgId flagname) {
     _flags.insert(flagname);
 }
 
-void Schema::addInt(std::string intname) {
+void Schema::addInt(ArgId intname) {
     _ints.insert(intname);
 }
 
-void Schema::addStr(std::string strarg) {
+void Schema::addStr(ArgId strarg) {
     _strs.insert(strarg);
 }

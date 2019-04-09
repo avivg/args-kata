@@ -3,7 +3,7 @@
 
 using namespace Args;
 
-Parser::Parser(Args::Schema &schema) {
+Parser::Parser(Schema &schema) {
     initFromSchema(schema);
 }
 
@@ -13,27 +13,27 @@ void Parser::initFromSchema(Schema &schema) {
     initStrings(schema.strArgs());
 }
 
-void Parser::initBooleans(std::set<std::string> schemaFlags) {
-    for (std::set<std::string>::iterator it = schemaFlags.begin();
+void Parser::initBooleans(ArgIdSet schemaFlags) {
+    for (ArgIdSet::iterator it = schemaFlags.begin();
             it != schemaFlags.end(); ++it) {
-        std::string flag = *it;
+        ArgId flag = *it;
         _flag_args[flag] = false;
     }
 }
 
-void Parser::initIntegers(std::set<std::string> schemaIntNames) {
-    for (std::set<std::string>::iterator it = schemaIntNames.begin();
+void Parser::initIntegers(ArgIdSet schemaIntNames) {
+    for (ArgIdSet::iterator it = schemaIntNames.begin();
             it != schemaIntNames.end(); ++it) {
-        std::string intname = *it;
+        ArgId intname = *it;
         _int_args[intname] = Parser::DEFAULT_INT;
     }
 }
 
 const std::string Parser::DEFAULT_STR = "";
-void Parser::initStrings(std::set<std::string> schemaStrArgs) {
-    for (std::set<std::string>::iterator it = schemaStrArgs.begin();
+void Parser::initStrings(ArgIdSet schemaStrArgs) {
+    for (ArgIdSet::iterator it = schemaStrArgs.begin();
             it != schemaStrArgs.end(); ++it) {
-        std::string strarg = *it;
+        ArgId strarg = *it;
         _str_args[strarg] = Parser::DEFAULT_STR;
     }
 }
@@ -46,7 +46,7 @@ const char * getArgName(const char *arg) {
 
 void Parser::parse(int argc, const char** argv) {
     for (int arg = 0; arg < argc; arg++) {
-        std::string argname = getArgName(argv[arg]);
+        ArgId argname = getArgName(argv[arg]);
         if (isFlagValid(argname)) {
             _flag_args[argname] = true;
         } else if (isIntNameValid(argname)) {
@@ -60,38 +60,38 @@ void Parser::parse(int argc, const char** argv) {
     }
 }
 
-template<typename T, typename S>
-bool isIdInMap(std::map<T,S> m, T id) {
+template<typename valT>
+bool isIdInMap(ArgMap<valT> m, ArgId id) {
     return (m.find(id) != m.end());
 }
 
-inline bool Parser::isFlagValid(std::string flag) {
+inline bool Parser::isFlagValid(ArgId flag) {
     return isIdInMap(_flag_args, flag);
 }
 
-bool Parser::getBool(std::string flag) {
+bool Parser::getBool(ArgId flag) {
     if (isFlagValid(flag)) {
         return _flag_args[flag];
     }
     throw "Undefined Flag";
 }
 
-inline bool Parser::isIntNameValid(std::string intname) {
+inline bool Parser::isIntNameValid(ArgId intname) {
     return isIdInMap(_int_args, intname);
 }
 
-int Parser::getInt(std::string intname) {
+int Parser::getInt(ArgId intname) {
     if (isIntNameValid(intname)) {
         return _int_args[intname];
     }
     throw "Undefine Int";
 }
 
-inline bool Parser::isStrArgValid(std::string strarg) {
+inline bool Parser::isStrArgValid(ArgId strarg) {
     return isIdInMap(_str_args, strarg);
 }
 
-std::string Parser::getStr(std::string strarg) {
+std::string Parser::getStr(ArgId strarg) {
     if (isStrArgValid(strarg)) {
         return _str_args[strarg];
     }
