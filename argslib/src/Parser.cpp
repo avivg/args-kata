@@ -1,5 +1,5 @@
 #include <Args.hpp>
-#include <cstdlib>
+#include <string>
 
 using namespace Args;
 
@@ -31,8 +31,8 @@ void Parser::initArgMapWithDefaultVals(
     ArgMap<valT> &argmap,
     const ArgIdSet &keys,
     valT initval) {
-    for (ArgIdSet::iterator it = keys.begin(); it != keys.end(); ++it) {
-        argmap[*it] = initval;
+    for (auto key : keys) {
+        argmap[key] = initval;
     }
 }
 
@@ -48,7 +48,7 @@ void Parser::parse(int argc, const char** argv) {
         if (isFlagValid(argname)) {
             _flag_args[argname] = true;
         } else if (isIntNameValid(argname)) {
-            _int_args[argname] = std::atoi(argv[++arg]);
+            _int_args[argname] = std::stoi(argv[++arg]);
         } else if (isStrArgValid(argname)) {
             _str_args[argname] = argv[++arg];
         } else {

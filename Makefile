@@ -1,4 +1,4 @@
-CPPFLAGS = -Wall -g -pedantic
+CPPFLAGS = -Wall -g -pedantic -std=c++11
 
 ARGS_HDRS_DIR = argslib/include
 ARGS_SRC_DIR = argslib/src

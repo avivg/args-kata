@@ -1,6 +1,6 @@
-#include <CppUTest/TestHarness.h>
 
 #include <Args.hpp>
+#include <CppUTest/TestHarness.h>
 
 using namespace Args;
 
