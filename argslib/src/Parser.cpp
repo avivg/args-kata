@@ -34,8 +34,7 @@ void Parser::parse(int argc, const char** argv) {
         if (isFlagValid(argname)) {
             _flag_args[argname] = true;
         } else if (isIntNameValid(argname)) {
-            int val = std::atoi(argv[++arg]);
-            _int_args[argname] = val;
+            _int_args[argname] = std::atoi(argv[++arg]);
         } else {
             // Unknown flag
             throw "Invalid Argument";
@@ -43,8 +42,13 @@ void Parser::parse(int argc, const char** argv) {
     }
 }
 
+template<typename T, typename S>
+bool isIdInMap(std::map<T,S> m, T id) {
+    return (m.find(id) != m.end());
+}
+
 inline bool Parser::isFlagValid(std::string flag) {
-    return (_flag_args.find(flag) != _flag_args.end());
+    return isIdInMap(_flag_args, flag);
 }
 
 bool Parser::getBool(std::string flag) {
@@ -55,7 +59,7 @@ bool Parser::getBool(std::string flag) {
 }
 
 inline bool Parser::isIntNameValid(std::string intname) {
-    return (_int_args.find(intname) != _int_args.end());
+    return isIdInMap(_int_args, intname);
 }
 
 int Parser::getInt(std::string intname) {

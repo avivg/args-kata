@@ -30,6 +30,13 @@ namespace Args
     class Parser {
     public:
         Parser(Schema &schema);
+
+        // Perform parsing over the given arguments.
+        // argv is expected to have 'argc' cstrings.
+        // Each identifier is expected to have '-' prceding it.
+        // Values (for integers and strings) are separated from
+        // the identifiers by whitespace (i.e they are in a separate
+        // string in argv)
         void parse(int argc, const char **argv);
         
         // Return true if flag is mentioned in argv, false otherwise
