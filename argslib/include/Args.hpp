@@ -9,6 +9,13 @@ namespace Args
     public:
         void addFlag(std::string flag);
     };
+
+    class Parser {
+    public:
+        Parser(Schema &schema);
+        void parse(int argc, char **argv);
+        bool getBool(std::string flag);
+    };
 }
 
 #endif // __ARGS_HPP__
