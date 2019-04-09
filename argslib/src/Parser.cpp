@@ -28,9 +28,15 @@ void Parser::initIntegers(std::set<std::string> schemaIntNames) {
     }
 }
 
+const char * getArgName(const char *arg) {
+    // Currently only skip the '-'
+    return arg + 1;
+    // TODO validate arg is of pattern /-[a-zA-Z].*/
+}
+
 void Parser::parse(int argc, const char** argv) {
     for (int arg = 0; arg < argc; arg++) {
-        std::string argname = (argv[arg] + 1); // skip '-'
+        std::string argname = getArgName(argv[arg]);
         if (isFlagValid(argname)) {
             _flag_args[argname] = true;
         } else if (isIntNameValid(argname)) {
