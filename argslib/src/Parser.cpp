@@ -13,13 +13,6 @@ void Parser::initFromSchema(Schema &schema) {
     initStrings(schema.strArgs());
 }
 
-template<typename valT>
-void initArgMapWithDefaultVals(ArgMap<valT> &argmap, const ArgIdSet &keys, valT initval) {
-    for (ArgIdSet::iterator it = keys.begin(); it != keys.end(); ++it) {
-        argmap[*it] = initval;
-    }
-}
-
 void Parser::initBooleans(const ArgIdSet &schemaFlags) {
     initArgMapWithDefaultVals(_flag_args, schemaFlags, false);
 }
@@ -31,6 +24,16 @@ void Parser::initIntegers(const ArgIdSet &schemaIntNames) {
 const std::string Parser::DEFAULT_STR = "";
 void Parser::initStrings(const ArgIdSet &schemaStrArgs) {
     initArgMapWithDefaultVals(_str_args, schemaStrArgs, Parser::DEFAULT_STR);
+}
+
+template<typename valT>
+void Parser::initArgMapWithDefaultVals(
+    ArgMap<valT> &argmap,
+    const ArgIdSet &keys,
+    valT initval) {
+    for (ArgIdSet::iterator it = keys.begin(); it != keys.end(); ++it) {
+        argmap[*it] = initval;
+    }
 }
 
 const char * getArgName(const char *arg) {
@@ -53,11 +56,6 @@ void Parser::parse(int argc, const char** argv) {
             throw "Invalid Argument";
         }
     }
-}
-
-template<typename valT>
-bool isIdInMap(ArgMap<valT> m, ArgId id) {
-    return (m.find(id) != m.end());
 }
 
 inline bool Parser::isFlagValid(ArgId &flag) {
@@ -91,4 +89,9 @@ std::string Parser::getStr(ArgId strarg) {
         return _str_args[strarg];
     }
     throw "Undefined String";
+}
+
+template<typename valT>
+bool Parser::isIdInMap(ArgMap<valT> argmap, ArgId id) {
+    return (argmap.find(id) != argmap.end());
 }

@@ -84,6 +84,15 @@ namespace Args
         ArgMap<bool> _flag_args;
         ArgMap<int> _int_args;
         ArgMap<std::string> _str_args;
+
+        template<typename valT>
+        static void initArgMapWithDefaultVals(
+            ArgMap<valT> &argmap,
+            const ArgIdSet &keys,
+            valT initval);
+        
+        template<typename valT>
+        static bool isIdInMap(ArgMap<valT> argmap, ArgId id);
     };
 }
 
