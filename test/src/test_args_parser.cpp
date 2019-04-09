@@ -27,7 +27,7 @@ TEST(ParserUnitTestGroup, ParserShould_RetFalse_ForNotSuppliedFlag) {
     sch.addFlag(flagname);
     Parser parser(sch);
     // When
-    parser.parse(0, nullptr);
+    parser.parse(0, NULL);
     // Check
     CHECK_FALSE(parser.getBool(flagname));
 }

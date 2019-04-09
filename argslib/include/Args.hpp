@@ -2,7 +2,7 @@
 #define __ARGS_HPP__
 
 #include <string>
-#include <vector>
+#include <set>
 
 namespace Args
 {
@@ -12,7 +12,7 @@ namespace Args
         bool hasFlag(std::string flag);
 
     private:
-        std::vector<std::string> _flags;
+        std::set<std::string> _flags;
     };
 
     class Parser {
@@ -21,9 +21,12 @@ namespace Args
         void parse(int argc, const char **argv);
         bool getBool(std::string flag);
 
+    protected:
+        bool isFlagArgumentMentioned(std::string flag);
+    
     private:
         Schema& _schema;
-        std::vector<std::string> _flag_args;
+        std::set<std::string> _flag_args;
     };
 }
 

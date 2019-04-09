@@ -8,7 +8,7 @@ void Args::Parser::parse(int argc, const char** argv) {
     for (int arg = 0; arg < argc; arg++) {
         std::string flag_arg = (argv[arg] + 1); // skip '-'
         if (_schema.hasFlag(flag_arg)) {
-            _flag_args.push_back(flag_arg);
+            _flag_args.insert(flag_arg);
         } else {
             // Unknown flag
             throw "Invalid Argument";
@@ -19,13 +19,12 @@ void Args::Parser::parse(int argc, const char** argv) {
 bool Args::Parser::getBool(std::string flag) {
     if (_schema.hasFlag(flag))
     {
-        for (auto flag_arg = _flag_args.begin(); flag_arg != _flag_args.end(); flag_arg++) {
-            if (flag == *flag_arg) {
-                return true;
-            }
-        }
+        return isFlagArgumentMentioned(flag);
     } else {
         throw "Undefined flag";
     }
-    return false;
+}
+
+bool Args::Parser::isFlagArgumentMentioned(std::string flag) {
+    return _flag_args.find(flag) != _flag_args.end();
 }
