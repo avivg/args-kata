@@ -7,7 +7,7 @@ using namespace Args;
 TEST_GROUP(SchemaUnitTestGroup) {
 };
 
-TEST(SchemaUnitTestGroup, SchemaShould_save_boolean_flags) {
+TEST(SchemaUnitTestGroup, SchemaShould_SaveBooleanFlags) {
     // Given
     Schema sch;
     std::string flagname = "FLAG";
@@ -18,7 +18,7 @@ TEST(SchemaUnitTestGroup, SchemaShould_save_boolean_flags) {
     CHECK(*sch.flags().begin() == flagname);
 }
 
-TEST(SchemaUnitTestGroup, SchemaShould_save_int_args) {
+TEST(SchemaUnitTestGroup, SchemaShould_SaveIntArgs) {
         // Given
     Schema sch;
     std::string intname = "NUMBER";
@@ -27,4 +27,15 @@ TEST(SchemaUnitTestGroup, SchemaShould_save_int_args) {
     // Check
     CHECK_EQUAL(1, sch.intNames().size());
     CHECK(intname == *sch.intNames().begin());
+}
+
+TEST(SchemaUnitTestGroup, SchemaShould_SaveStringArgs) {
+        // Given
+    Schema sch;
+    std::string argname = "STR";
+    // When
+    sch.addStr(argname);
+    // Check
+    CHECK_EQUAL(1, sch.strArgs().size());
+    CHECK(argname == *sch.strArgs().begin());
 }

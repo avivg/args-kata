@@ -132,3 +132,59 @@ TEST(ParserUnitTestGroup, ParserShould_Raise_ForNotDefinedIntWhileGetting) {
 
     }
 }
+
+TEST(ParserUnitTestGroup, ParserShould_ReturnValForSuppliedStr) {
+    // Given
+    Schema sch;
+    sch.addStr("dir");
+    Parser parser(sch);
+    const char *argv[2] = {"-dir", "some/string"};
+    // When
+    parser.parse(2, argv);
+    // Check
+    CHECK("some/string" == parser.getStr("dir"));
+}
+
+TEST(ParserUnitTestGroup, ParserShould_ReturnEmptyForNotSuppliedStr) {
+    // Given
+    Schema sch;
+    sch.addStr("dir");
+    Parser parser(sch);
+    // When
+    parser.parse(0, NULL);
+    // Check
+    CHECK("" == parser.getStr("dir"));
+}
+
+TEST(ParserUnitTestGroup, ParserShould_Raise_ForNotDefinedStrWhileParsing) {
+    // Given
+    Schema sch;
+    sch.addStr("str1");
+    Parser parser(sch);
+    // When
+    const char *argv[2] = {"-str2", "blabla"};
+    // Check
+    try {
+        parser.parse(2, argv);
+        FAIL("Expected exception.. :(");
+    } catch (const char * msg) {
+
+    }
+}
+
+TEST(ParserUnitTestGroup, ParserShould_Raise_ForNotDefinedStrWhileGetting) {
+    // Given
+    Schema sch;
+    sch.addStr("str1");
+    Parser parser(sch);
+    const char *argv[2] = {"-str1", "foo/bar"};
+    // When
+    parser.parse(2, argv);
+    // Check
+    try {
+        parser.getStr("abc");
+        FAIL("Expected exception.. :(");
+    } catch (const char * msg) {
+
+    }
+}

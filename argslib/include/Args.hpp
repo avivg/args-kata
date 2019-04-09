@@ -22,9 +22,14 @@ namespace Args
         // Get all integer names in the schema.
         std::set<std::string> intNames() { return _ints; }
 
+
+        void addStr(std::string strarg);
+        std::set<std::string> strArgs() {return _strs; }
+
     private:
         std::set<std::string> _flags;
         std::set<std::string> _ints;
+        std::set<std::string> _strs;
     };
 
     class Parser {
@@ -49,18 +54,23 @@ namespace Args
         int getInt(std::string flag);
         static const int DEFAULT_INT = 0;
         
+        std::string getStr(std::string strarg);
+        static const std::string DEFAULT_STR;
 
     protected:
         void initFromSchema(Schema &schema);
         void initBooleans(std::set<std::string> schemaFlags);
         void initIntegers(std::set<std::string> schemaIntNames);
+        void initStrings(std::set<std::string> schemaStrArgs);
 
         inline bool isFlagValid(std::string flag);
         inline bool isIntNameValid(std::string intname);
+        inline bool isStrArgValid(std::string strarg);
         
     private:
         std::map<std::string, bool> _flag_args;
         std::map<std::string, int> _int_args;
+        std::map<std::string, std::string> _str_args;
     };
 }
 

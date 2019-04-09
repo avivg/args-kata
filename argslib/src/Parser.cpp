@@ -10,6 +10,7 @@ Parser::Parser(Args::Schema &schema) {
 void Parser::initFromSchema(Schema &schema) {
     initBooleans(schema.flags());
     initIntegers(schema.intNames());
+    initStrings(schema.strArgs());
 }
 
 void Parser::initBooleans(std::set<std::string> schemaFlags) {
@@ -28,6 +29,15 @@ void Parser::initIntegers(std::set<std::string> schemaIntNames) {
     }
 }
 
+const std::string Parser::DEFAULT_STR = "";
+void Parser::initStrings(std::set<std::string> schemaStrArgs) {
+    for (std::set<std::string>::iterator it = schemaStrArgs.begin();
+            it != schemaStrArgs.end(); ++it) {
+        std::string strarg = *it;
+        _str_args[strarg] = Parser::DEFAULT_STR;
+    }
+}
+
 const char * getArgName(const char *arg) {
     // Currently only skip the '-'
     return arg + 1;
@@ -41,6 +51,8 @@ void Parser::parse(int argc, const char** argv) {
             _flag_args[argname] = true;
         } else if (isIntNameValid(argname)) {
             _int_args[argname] = std::atoi(argv[++arg]);
+        } else if (isStrArgValid(argname)) {
+            _str_args[argname] = argv[++arg];
         } else {
             // Unknown flag
             throw "Invalid Argument";
@@ -73,4 +85,15 @@ int Parser::getInt(std::string intname) {
         return _int_args[intname];
     }
     throw "Undefine Int";
+}
+
+inline bool Parser::isStrArgValid(std::string strarg) {
+    return isIdInMap(_str_args, strarg);
+}
+
+std::string Parser::getStr(std::string strarg) {
+    if (isStrArgValid(strarg)) {
+        return _str_args[strarg];
+    }
+    throw "Undefined String";
 }
