@@ -63,5 +63,16 @@ TEST(ParserUnitTestGroup, ParserShould_Raise_ForNotDefinedFlagWhileGetting) {
     } catch (const char * msg) {
         
     }
+}
 
+TEST(ParserUnitTestGroup, ParserShould_ReturnValForSuppliedInt) {
+    // Given
+    Schema sch;
+    sch.addInt("number");
+    Parser parser(sch);
+    const char *argv[2] = {"-number", "13"};
+    // When
+    parser.parse(2, argv);
+    // Check
+    CHECK_EQUAL(13, parser.getInt("number"));
 }

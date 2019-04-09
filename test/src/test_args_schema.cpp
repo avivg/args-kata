@@ -16,3 +16,13 @@ TEST(SchemaUnitTestGroup, SchemaShould_save_boolean_flags) {
     // Check
     CHECK_TRUE(sch.hasFlag(flagname));
 }
+
+TEST(SchemaUnitTestGroup, SchemaShould_save_int_args) {
+        // Given
+    Schema sch;
+    std::string intname = "NUMBER";
+    // When
+    sch.addInt(intname);
+    // Check
+    CHECK_TRUE(sch.hasInt(intname));
+}
