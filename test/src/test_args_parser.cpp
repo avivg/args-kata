@@ -76,3 +76,47 @@ TEST(ParserUnitTestGroup, ParserShould_ReturnValForSuppliedInt) {
     // Check
     CHECK_EQUAL(13, parser.getInt("number"));
 }
+
+TEST(ParserUnitTestGroup, ParserShould_ReturnZeroForNotSuppliedInt) {
+    // Given
+    Schema sch;
+    sch.addInt("number");
+    Parser parser(sch);
+    // When
+    parser.parse(0, NULL);
+    // Check
+    CHECK_EQUAL(0, parser.getInt("number"));
+}
+
+TEST(ParserUnitTestGroup, ParserShould_Raise_ForNotDefinedIntWhileParsing) {
+    // Given
+    Schema sch;
+    sch.addInt("number");
+    Parser parser(sch);
+    // When
+    const char *argv[2] = {"-abc", "5"};
+    // Check
+    try {
+        parser.parse(2, argv);
+        FAIL("Expected exception.. :(");
+    } catch (const char * msg) {
+
+    }
+}
+
+TEST(ParserUnitTestGroup, ParserShould_Raise_ForNotDefinedIntWhileGetting) {
+    // Given
+    Schema sch;
+    sch.addInt("number");
+    Parser parser(sch);
+    const char *argv[2] = {"-number", "5"};
+    // When
+    parser.parse(2, argv);
+    // Check
+    try {
+        parser.getInt("abc");
+        FAIL("Expected exception.. :(");
+    } catch (const char * msg) {
+
+    }
+}
