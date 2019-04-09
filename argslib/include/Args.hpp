@@ -13,24 +13,24 @@ namespace Args
     class Schema {
     public:
         // Add a boolean flag name to the schema.
-        void addFlag(ArgId flag);
+        void addFlag(const ArgId &flag);
         
         // Get all flags in the schema.
-        ArgIdSet flags() { return _flags; }
+        const ArgIdSet flags() { return _flags; }
 
         
         // Add an integer name to the schema.
-        void addInt(ArgId flag);
+        void addInt(const ArgId &flag);
 
         // Get all integer names in the schema.
-        ArgIdSet intNames() { return _ints; }
+        const ArgIdSet intNames() { return _ints; }
 
 
         // Add a string argument name to the schema.
-        void addStr(ArgId strarg);
+        void addStr(const ArgId &strarg);
 
         // Get all the string argument names in the schema.
-        ArgIdSet strArgs() {return _strs; }
+        const ArgIdSet strArgs() {return _strs; }
 
     private:
         ArgIdSet _flags;
@@ -56,18 +56,18 @@ namespace Args
         
         // Return true if flag is mentioned in argv, false otherwise
         // Throws exception if flag was not defined by the parser schema.
-        bool getBool(ArgId flag);
+        bool getBool(const ArgId flag);
 
         // Return the value given after -<intname> in argv, or DEFAULT_INT if
         // -<intname> was not given.
         // Throws exception if intname was no defined by the parser schema
-        int getInt(ArgId flag);
+        int getInt(const ArgId flag);
         static const int DEFAULT_INT = 0;
         
         // Return the value given after -<strarg> in argv, or DEFAULT_STR ("") if
         // -<strarg> was not given.
         // Throws exception if strarg was no defined by the parser schema
-        std::string getStr(ArgId strarg);
+        std::string getStr(const ArgId strarg);
         static const std::string DEFAULT_STR; // probably ""
 
     protected:
@@ -76,9 +76,9 @@ namespace Args
         void initIntegers(const ArgIdSet &schemaIntNames);
         void initStrings(const ArgIdSet &schemaStrArgs);
 
-        inline bool isFlagValid(ArgId &flag);
-        inline bool isIntNameValid(ArgId &intname);
-        inline bool isStrArgValid(ArgId &strarg);
+        inline bool isFlagValid(const ArgId &flag);
+        inline bool isIntNameValid(const ArgId &intname);
+        inline bool isStrArgValid(const ArgId &strarg);
         
     private:
         ArgMap<bool> _flag_args;
@@ -89,10 +89,10 @@ namespace Args
         static void initArgMapWithDefaultVals(
             ArgMap<valT> &argmap,
             const ArgIdSet &keys,
-            valT initval);
+            const valT initval);
         
         template<typename valT>
-        static bool isIdInMap(ArgMap<valT> argmap, ArgId id);
+        static bool isIdInMap(const ArgMap<valT> argmap, const ArgId id);
     };
 }
 

@@ -30,7 +30,7 @@ template<typename valT>
 void Parser::initArgMapWithDefaultVals(
     ArgMap<valT> &argmap,
     const ArgIdSet &keys,
-    valT initval) {
+    const valT initval) {
     for (auto key : keys) {
         argmap[key] = initval;
     }
@@ -58,33 +58,33 @@ void Parser::parse(int argc, const char** argv) {
     }
 }
 
-inline bool Parser::isFlagValid(ArgId &flag) {
+inline bool Parser::isFlagValid(const ArgId &flag) {
     return isIdInMap(_flag_args, flag);
 }
 
-bool Parser::getBool(ArgId flag) {
+bool Parser::getBool(const ArgId flag) {
     if (isFlagValid(flag)) {
         return _flag_args[flag];
     }
     throw "Undefined Flag";
 }
 
-inline bool Parser::isIntNameValid(ArgId &intname) {
+inline bool Parser::isIntNameValid(const ArgId &intname) {
     return isIdInMap(_int_args, intname);
 }
 
-int Parser::getInt(ArgId intname) {
+int Parser::getInt(const ArgId intname) {
     if (isIntNameValid(intname)) {
         return _int_args[intname];
     }
     throw "Undefine Int";
 }
 
-inline bool Parser::isStrArgValid(ArgId &strarg) {
+inline bool Parser::isStrArgValid(const ArgId &strarg) {
     return isIdInMap(_str_args, strarg);
 }
 
-std::string Parser::getStr(ArgId strarg) {
+std::string Parser::getStr(const ArgId strarg) {
     if (isStrArgValid(strarg)) {
         return _str_args[strarg];
     }
@@ -92,6 +92,6 @@ std::string Parser::getStr(ArgId strarg) {
 }
 
 template<typename valT>
-bool Parser::isIdInMap(ArgMap<valT> argmap, ArgId id) {
+bool Parser::isIdInMap(const ArgMap<valT> argmap, const ArgId id) {
     return (argmap.find(id) != argmap.end());
 }
