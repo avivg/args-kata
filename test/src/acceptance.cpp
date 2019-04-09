@@ -10,11 +10,11 @@ TEST(ArgsAcceptanceTestGroup, ArgsShould_parse_boolean_flag) {
     schema.addFlag("a");
     schema.addFlag("b");
     int argc = 1;
-    char argv[1][4] = {"-b"};
+    const char *argv[1] = {"-b"};
     // When
     Args::Parser parser(schema);
-    parser.parse(1, (char**)argv);
+    parser.parse(argc, argv);
     // Check
-    CHECK(parser.getBool("a") == false)
-    CHECK(parser.getBool("b") == true)
+    CHECK_FALSE(parser.getBool("a"));
+    CHECK_TRUE(parser.getBool("b"));
 }

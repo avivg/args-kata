@@ -1,4 +1,4 @@
-CPPFLAGS = -Wall
+CPPFLAGS = -Wall -std=c++11 -g
 
 ARGS_HDRS_DIR = argslib/include
 ARGS_SRC_DIR = argslib/src
@@ -18,7 +18,7 @@ TEST_EXE = $(TEST_BUILD_DIR)/test_args
 TEST_SRCS = $(shell find $(TEST_SRC_DIR) -iname "*.cpp")
 TEST_OBJS = $(subst $(TEST_SRC_DIR),$(TEST_BUILD_DIR),$(TEST_SRCS:.cpp=.o))
 
-TEST_LD_LIBS = -lCppUTest
+TEST_LD_LIBS = -lCppUTest -lCppUTestExt
 
 
 .PHONY: all run_tests clean
