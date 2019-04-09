@@ -13,29 +13,24 @@ void Parser::initFromSchema(Schema &schema) {
     initStrings(schema.strArgs());
 }
 
-void Parser::initBooleans(ArgIdSet schemaFlags) {
-    for (ArgIdSet::iterator it = schemaFlags.begin();
-            it != schemaFlags.end(); ++it) {
-        ArgId flag = *it;
-        _flag_args[flag] = false;
+template<typename valT>
+void initArgMapWithDefaultVals(ArgMap<valT> &argmap, const ArgIdSet &keys, valT initval) {
+    for (ArgIdSet::iterator it = keys.begin(); it != keys.end(); ++it) {
+        argmap[*it] = initval;
     }
 }
 
-void Parser::initIntegers(ArgIdSet schemaIntNames) {
-    for (ArgIdSet::iterator it = schemaIntNames.begin();
-            it != schemaIntNames.end(); ++it) {
-        ArgId intname = *it;
-        _int_args[intname] = Parser::DEFAULT_INT;
-    }
+void Parser::initBooleans(const ArgIdSet &schemaFlags) {
+    initArgMapWithDefaultVals(_flag_args, schemaFlags, false);
+}
+
+void Parser::initIntegers(const ArgIdSet &schemaIntNames) {
+    initArgMapWithDefaultVals(_int_args, schemaIntNames, Parser::DEFAULT_INT);
 }
 
 const std::string Parser::DEFAULT_STR = "";
-void Parser::initStrings(ArgIdSet schemaStrArgs) {
-    for (ArgIdSet::iterator it = schemaStrArgs.begin();
-            it != schemaStrArgs.end(); ++it) {
-        ArgId strarg = *it;
-        _str_args[strarg] = Parser::DEFAULT_STR;
-    }
+void Parser::initStrings(const ArgIdSet &schemaStrArgs) {
+    initArgMapWithDefaultVals(_str_args, schemaStrArgs, Parser::DEFAULT_STR);
 }
 
 const char * getArgName(const char *arg) {
@@ -65,7 +60,7 @@ bool isIdInMap(ArgMap<valT> m, ArgId id) {
     return (m.find(id) != m.end());
 }
 
-inline bool Parser::isFlagValid(ArgId flag) {
+inline bool Parser::isFlagValid(ArgId &flag) {
     return isIdInMap(_flag_args, flag);
 }
 
@@ -76,7 +71,7 @@ bool Parser::getBool(ArgId flag) {
     throw "Undefined Flag";
 }
 
-inline bool Parser::isIntNameValid(ArgId intname) {
+inline bool Parser::isIntNameValid(ArgId &intname) {
     return isIdInMap(_int_args, intname);
 }
 
@@ -87,7 +82,7 @@ int Parser::getInt(ArgId intname) {
     throw "Undefine Int";
 }
 
-inline bool Parser::isStrArgValid(ArgId strarg) {
+inline bool Parser::isStrArgValid(ArgId &strarg) {
     return isIdInMap(_str_args, strarg);
 }
 

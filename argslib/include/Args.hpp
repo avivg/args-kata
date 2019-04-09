@@ -72,13 +72,13 @@ namespace Args
 
     protected:
         void initFromSchema(Schema &schema);
-        void initBooleans(ArgIdSet schemaFlags);
-        void initIntegers(ArgIdSet schemaIntNames);
-        void initStrings(ArgIdSet schemaStrArgs);
+        void initBooleans(const ArgIdSet &schemaFlags);
+        void initIntegers(const ArgIdSet &schemaIntNames);
+        void initStrings(const ArgIdSet &schemaStrArgs);
 
-        inline bool isFlagValid(ArgId flag);
-        inline bool isIntNameValid(ArgId intname);
-        inline bool isStrArgValid(ArgId strarg);
+        inline bool isFlagValid(ArgId &flag);
+        inline bool isIntNameValid(ArgId &intname);
+        inline bool isStrArgValid(ArgId &strarg);
         
     private:
         ArgMap<bool> _flag_args;
