@@ -17,10 +17,15 @@ void Args::Parser::parse(int argc, const char** argv) {
 }
 
 bool Args::Parser::getBool(std::string flag) {
-    for (auto flag_arg = _flag_args.begin(); flag_arg != _flag_args.end(); flag_arg++) {
-        if (flag == *flag_arg) {
-            return true;
+    if (_schema.hasFlag(flag))
+    {
+        for (auto flag_arg = _flag_args.begin(); flag_arg != _flag_args.end(); flag_arg++) {
+            if (flag == *flag_arg) {
+                return true;
+            }
         }
+    } else {
+        throw "Undefined flag";
     }
     return false;
 }

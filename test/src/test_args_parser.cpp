@@ -32,7 +32,7 @@ TEST(ParserUnitTestGroup, ParserShould_RetFalse_ForNotSuppliedFlag) {
     CHECK_FALSE(parser.getBool(flagname));
 }
 
-TEST(ParserUnitTestGroup, ParserShould_Raise_ForNotDefinedFlag) {
+TEST(ParserUnitTestGroup, ParserShould_Raise_ForNotDefinedFlagWhileParsing) {
     // Given
     Schema sch;
     sch.addFlag("abc");
@@ -46,4 +46,22 @@ TEST(ParserUnitTestGroup, ParserShould_Raise_ForNotDefinedFlag) {
     } catch (const char * msg) {
         
     }
+}
+
+TEST(ParserUnitTestGroup, ParserShould_Raise_ForNotDefinedFlagWhileGetting) {
+    // Given
+    Schema sch;
+    sch.addFlag("abc");
+    Parser parser(sch);
+    const char *arg = "-abc";
+    // When
+    parser.parse(1, &arg);
+    // Check
+    try {
+        parser.getBool("cba");
+        FAIL("Expected exception to be raised.. :(");
+    } catch (const char * msg) {
+        
+    }
+
 }

@@ -7,14 +7,14 @@ TEST_GROUP(ArgsAcceptanceTestGroup) {
 TEST(ArgsAcceptanceTestGroup, ArgsShould_parse_boolean_flag) {
     // Given
     Args::Schema schema;
-    schema.addFlag("a");
-    schema.addFlag("b");
+    schema.addFlag("aflag");
+    schema.addFlag("bflag");
     int argc = 1;
-    const char *argv[1] = {"-b"};
+    const char *argv[1] = {"-bflag"};
     // When
     Args::Parser parser(schema);
     parser.parse(argc, argv);
     // Check
-    CHECK_FALSE(parser.getBool("a"));
-    CHECK_TRUE(parser.getBool("b"));
+    CHECK_FALSE(parser.getBool("aflag"));
+    CHECK_TRUE(parser.getBool("bflag"));
 }
