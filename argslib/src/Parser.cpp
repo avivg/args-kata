@@ -1,9 +1,5 @@
 #include <Args.hpp>
 
-void Args::Schema::addFlag(std::string flagname) {
-
-}
-
 Args::Parser::Parser(Args::Schema &schema) {
 
 }
