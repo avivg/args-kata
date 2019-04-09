@@ -88,6 +88,18 @@ TEST(ParserUnitTestGroup, ParserShould_ReturnZeroForNotSuppliedInt) {
     CHECK_EQUAL(0, parser.getInt("number"));
 }
 
+TEST(ParserUnitTestGroup, ParserShould_ReturnNegativeValues) {
+    // Given
+    Schema sch;
+    sch.addInt("num");
+    Parser parser(sch);
+    // When
+    const char *args[2] = {"-num", "-65536"};
+    parser.parse(2, args);
+    // Check
+    CHECK_EQUAL(-65536, parser.getInt("num"));
+}
+
 TEST(ParserUnitTestGroup, ParserShould_Raise_ForNotDefinedIntWhileParsing) {
     // Given
     Schema sch;
